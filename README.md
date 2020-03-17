@@ -1,12 +1,26 @@
-# Time series forecast using SARIMAX mdoel
+# Canada Bankruptcy Prediction
 
-## Abstract
-The purpose of this project is to predict Canadian national bankrupty rate by using the relevant data from January 1987 to December 2010. The avaialbe dataset includes bankruptcy rate, unemployment rates, house price index, and population. 
+## ME in this project
+* Role: Economics researcher, Data analyst
+* Tool: R
+* Duration: 1 week
 
 ## Introduction
-A time-series is a sequence of observations of variables taken at a regular time intervlas and it can be decomposed into *a trend, a seasonal (or a cyclical), and an irregular component. The trend component is the long-term behavior of the series and the cyclical component is the regular periodic movements. The irregular component is stochastic and the goal is to estimate and forecast this component.*
+> Nothing is more unpredictable than the financial market.
 
-## Methods
+Bankruptcy is a leagal process overseen by federal bankruptcy courts to allow individuals or businesses freedom from their debts, while simultaneously providing creditors an opportunity for repayment.
+
+The concept of time series is applied into the project. A time series a sequence of observations of variables taken at a regular time intervals and it can be decomposed into a trend, a seasonal (or a cyclical), and an irregular component. The trend component is the long-term behavior of the series; the cyclical component is the regularly periodic movements, and the irregular component is stochastic. The goal is to estimate and forecast the untypical elements. 
+
+In this project, we would like to control the irregularity, narrow biases, and get the result as accurate as possible. After these steps, we then could conclude the trend for the bankruptcy rate in the upcoming two years.
+
+## Data & Variables
+From 2015 to 2017, monthly country-level data including the unemployment rate, bankrtupcy rate, and house price index is used in the project. [Statistics Canada](https://www.statcan.gc.ca/eng/start) and [Federal Reserve Economic Data (FRED)](https://fred.stlouisfed.org/) are the main database.
+
+## Hypothesis
+Based on the situation of the Canadian financial market in 2015, we assume that the bankruptcy rate will decrease in the following years. To prove this statement, we will use the autocorrelation function (ACF) and the partial autocorrelation function (PACF) to figure out the optimal model.
+
+## Results
 ### * Step 1: Visualizing the dataset
 Before applying time series methodology to forecast, I first need to take a look at each variable in the dataset. We can tell that those time components are in each graph.
 
