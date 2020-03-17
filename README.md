@@ -11,9 +11,9 @@ A time-series is a sequence of observations of variables taken at a regular time
 Before applying time series methodology to forecast, I first need to take a look at each variable in the dataset. We can tell that those time components are in each graph.
 
 <p float="left">
-    <img src="https://github.com/katetywu/bankruptcy/blob/master/Figures/Figure2.jpeg" width="250" />
-    <img src="https://github.com/katetywu/bankruptcy/blob/master/Figures/Figure3.jpeg" width="250" />
-    <img src="https://github.com/katetywu/bankruptcy/blob/master/Figures/Figure4.jpeg" width="250" />
+    <img src="https://github.com/katetywu/Bankruptcy_Prediction/blob/master/Figures/Figure2.jpeg" width="250" />
+    <img src="https://github.com/katetywu/Bankruptcy_Prediction/blob/master/Figures/Figure3.jpeg" width="250" />
+    <img src="https://github.com/katetywu/Bankruptcy_Prediction/blob/master/Figures/Figure4.jpeg" width="250" />
 </p>
 
 According to the correlation heatmap, it seems that the bankruptcy rate has a negative correlation with the unemployment rate; while has a positive correlation with the house price index. I will take the unemployment rate and the house price index into account in later analysis.
