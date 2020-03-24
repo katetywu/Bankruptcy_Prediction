@@ -35,31 +35,4 @@ The AR involves regressing the variable on its own lagged/past values, the MA in
 
 > ARIMA is suitable for univariate datasets. ARIMAX is suitable for multivariate datasets.
 
-ARIMAX is used for analyses where there are additional and exogenous explanatory variables. I start building my model with ARIMAX and check the differencing option by the ADF test. According to the ADF test, the seasonal differencing is unnecessary, but based on the PACF plot, there is a decreasingly positive spike between lags. After careful consideration, I decide to take the seasonal differencing and get the order of *P.* With all elements prepared completely, I have several SARIMAX models that I select the optimal one by the comparison using the Akaike Information Criterion (AIC) - an estimator examines the relative amount of information lost by a given model. SARIMAX(4,1,5)(1,0,0)[12] gets the smallest AIC score; the other SARIMAX models can be found [here]("..."). There is still one thing to do before making the prediction - the model I chose is align with the White Noise priciple - all variables have the same variance and each value has a zero correlation with all other values. From the figure below, my model meets the criteria that I am prepared for the forecasting step.
-
-
-
-The following table depicts the result and compares one model from another; SARIMAX(4,1,5)(1,0,0)[12] gets the smallest AIC score. Though the model has the minimum AIC score, I still need to ensure that this model is align with the White Noise principle - all variables have the same variance and each value has a zero correlation with all other values.
-
-MODEL | LOGLIK | AIC
---- | --- | --- |
-SARIMAX(1,1,1)(1,0,0)[12] | 322.7757 | -653.5514
-SARIMAX(1,1,2)(1,0,0)[12] | 337.9108 | -661.8216
-SARIMAX(1,1,3)(1,0,0)[12] | 346.1099 | -676.2198
-SARIMAX(1,1,4)(1,0,0)[12] | 346.2825 | -674.5650
-SARIMAX(1,1,5)(1,0,0)[12] | 352.7679 | -685.5357
-SARIMAX(2,1,1)(1,0,0)[12] | 343.3811 | -672.7621
-SARIMAX(2,1,2)(1,0,0)[12] | 346.9254 | -677.8508
-SARIMAX(2,1,3)(1,0,0)[12] | 346.9545 | -675.9089
-SARIMAX(2,1,4)(1,0,0)[12] | 367.2904 | -714.5808
-SARIMAX(2,1,5)(1,0,0)[12] | 369.8277 | -717.6555
-SARIMAX(3,1,1)(1,0,0)[12] | 346.6656 | -677.3312
-SARIMAX(3,1,2)(1,0,0)[12] | 346.9773 | -675.9546
-SARIMAX(3,1,3)(1,0,0)[12] | 348.0559 | -676.1119
-SARIMAX(3,1,4)(1,0,0)[12] | 349.3335 | -676.6669
-SARIMAX(3,1,5)(1,0,0)[12] | 372.4272 | -720.8544
-SARIMAX(4,1,1)(1,0,0)[12] | 348.5848 | -679.1707
-SARIMAX(4,1,2)(1,0,0)[12] | 352.0183 | -684.0365
-SARIMAX(4,1,3)(1,0,0)[12] | 368.9054 | -715.8108
-SARIMAX(4,1,4)(1,0,0)[12] | 372.6625 | -721.3250
-SARIMAX(4,1,5)(1,0,0)[12] | 376.2098 | -726.4197
+ARIMAX is used for analyses where there are additional and exogenous explanatory variables. I start building my model with ARIMAX and check the differencing option by the ADF test. According to the ADF test, the seasonal differencing is unnecessary, but based on the PACF plot, there is a decreasingly positive spike between lags. After careful consideration, I decide to take the seasonal differencing and get the order of *P.* With all elements prepared completely, I have several SARIMAX models that I select the optimal one by the comparison using the Akaike Information Criterion (AIC) - an estimator examines the relative amount of information lost by a given model. SARIMAX(4,1,5)(1,0,0)[12] gets the smallest AIC score; other SARIMAX models can be found [here]("..."). There is still one thing to do before making the prediction - the model I chose is align with the White Noise priciple where all variables have the same variance and each value has a zero correlation with all other values. From the figure below, my model meets the criteria that I am prepared for the forecasting step.
