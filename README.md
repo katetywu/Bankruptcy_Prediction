@@ -23,7 +23,7 @@ Take the situation of the Canadian financial market in 2015 into consideration, 
 ## Results
 Based on the "eye-ball" test of the following figures, we have an increasing trend in both the bankruptcy rate and the house price index; a decreasing tendency in the unemployment rate. Though the directions of these three variables are opposite, I believe there might be a relationsip among them. The bankruptcy rate has a postive and a negative connection with the house price index and the unemployment rate, respectively. Having a quick overview of three variables, I also minimize the skewness in the bankruptcy rate by using the logarithm function.
 
-![Bankruptcy rate](https://github.com/katetywu/Bankruptcy_Prediction/blob/master/Figures/bankruptcyRate.jpeg "title-1") ![alt-text-2](https://github.com/katetywu/Bankruptcy_Prediction/blob/master/Figures/bankruptcyRate.jpeg "title-2")
+![Bankruptcy rate](https://github.com/katetywu/Bankruptcy_Prediction/blob/master/Figures/bankruptcyRate.jpeg =100x100) ![alt-text-2](https://github.com/katetywu/Bankruptcy_Prediction/blob/master/Figures/bankruptcyRate.jpeg "title-2")
 
 > Stationary indicates that the mean, variance, and autocorrelations are well approximated by sufficiently long time averages based on the single set of realizations.
 
