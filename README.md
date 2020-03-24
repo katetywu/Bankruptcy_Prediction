@@ -2,7 +2,7 @@
 
 ## ME in this project
 * Role: Economics researcher, Data analyst
-* Tool: R
+* Tool: RStudio
 * Duration: 1 week
 
 ## Introduction
@@ -12,48 +12,30 @@ Bankruptcy is a leagal process overseen by federal bankruptcy courts to allow in
 
 The concept of time series is applied into the project. A time series a sequence of observations of variables taken at a regular time intervals and it can be decomposed into a trend, a seasonal (or a cyclical), and an irregular component. The trend component is the long-term behavior of the series; the cyclical component is the regularly periodic movements, and the irregular component is stochastic. The goal is to estimate and forecast the untypical elements. 
 
-In this project, we would like to control the irregularity, narrow biases, and get the result as accurate as possible. After these steps, we then could conclude the trend for the bankruptcy rate in the upcoming two years.
+In this project, I would like to control the irregularity, narrow biases, and get the result as accurate as possible. After these steps, I then could conclude the trend for the bankruptcy rate in the upcoming two years.
 
 ## Data & Variables
-From 2015 to 2017, monthly country-level data including the unemployment rate, bankrtupcy rate, and house price index is used in the project. [Statistics Canada](https://www.statcan.gc.ca/eng/start) and [Federal Reserve Economic Data (FRED)](https://fred.stlouisfed.org/) are the main database.
+From 1980 to 2017, monthly country-level data including the unemployment rate, the bankrtupcy rate, and the house price index is used in the project. [Statistics Canada](https://www.statcan.gc.ca/eng/start) and [Federal Reserve Economic Data (FRED)](https://fred.stlouisfed.org/) are the main database.
 
 ## Hypothesis
-Based on the situation of the Canadian financial market in 2015, we assume that the bankruptcy rate will decrease in the following years. To prove this statement, we will use the autocorrelation function (ACF) and the partial autocorrelation function (PACF) to figure out the optimal model.
+Take the situation of the Canadian financial market in 2015 into consideration, I assume that the bankruptcy rate will decrease in the following years. To prove this statement, I will use the autoregressive moving average (ARMA) model to figure out the optimal model.
 
 ## Results
-### * Step 1: Visualizing the dataset
-Before applying time series methodology to forecast, I first need to take a look at each variable in the dataset. We can tell that those time components are in each graph.
+Based on the "eye-ball" test of the following figures, we have an increasing trend in both the bankruptcy rate and the house price index; a decreasing tendency in the unemployment rate. Though the directions of these three variables are opposite, I believe there might be a relationsip among them. The bankruptcy rate has a postive and a negative connection with the house price index and the unemployment rate, respectively. Having a quick overview of three variables, I also minimize the skewness in the bankruptcy rate by using the logarithm function.
 
-<p float="left">
-    <img src="https://github.com/katetywu/Bankruptcy_Prediction/blob/master/Figures/Figure2.jpeg" width="250" />
-    <img src="https://github.com/katetywu/Bankruptcy_Prediction/blob/master/Figures/Figure3.jpeg" width="250" />
-    <img src="https://github.com/katetywu/Bankruptcy_Prediction/blob/master/Figures/Figure4.jpeg" width="250" />
-</p>
+> Stationary indicates that the mean, variance, and autocorrelations are well approximated by sufficiently long time averages based on the single set of realizations.
 
-According to the correlation heatmap, it seems that the bankruptcy rate has a negative correlation with the unemployment rate; while has a positive correlation with the house price index. I will take the unemployment rate and the house price index into account in later analysis.
+I have to ensure that the time series - `bankruptcy rate` is stationary. There are several ways to detect whether or not the staionariness exists, I choose the Augmented Dickey-Fuller test (ADF) and fail to reject the null hypothesis, which the bankruptcy rate is stationary. Under this situation, I use the difference equation to eliminate *noises* from the variable. The difference equation is the funcation *expressing the value of a variable by its own lagged values, time, and other factors*; in other words, I take an one-year lag of the bankruptcy rate to remove the trend element.
 
-<p float="center">
-    <img src="https://github.com/katetywu/bankruptcy/blob/master/Figures/Figure6.jpeg" width="450" />
-</p>
+Not until finishing the data transformation process can I start to build a model. There are two directions to build the time seires model. One is the univariate model that has one dependent variable and its historical data; the other is the multivairate model that takes one dependent variables, other independent variables, and the historical data. Most of times, the multivariate model is used more often in the financial market in terms of the possible correlations, comprehensive factors, and realistic picture about the real world. The challenging parts for this type of method are complex statistics and arcane interpretations invovled. After reviewing all conditions carefully, I decide to use this method and I am prepared to set up my ARMA model.
 
-### * Step 2: Transforming the series and differencing
-The main series `bankruptcy rate` has conspicuous volatilities and it may have high skewed distributions that I transformed it into the logarithm. The rule-of-thumb before building the optimal model is to ensure whether or not the series is stationary, which *the mean, variance, and autocorrelations can be well approximated by sufficiently long time averages based on the single set of realizations.* The Augmented Dickey-Fuller test (ADF) can detect stationarity, and in this case, I failed to reject the null hypothesis that the series is non-stationary. Under this situation the difference equation, *expressing the value of a variable as a function of its own lagged values, time, and other variables* can fix the issue. Only the trend differencing is needed in this case.
+> Autoregressive Moving Average (ARMA) Model is used to describe wearkly stationary stochastic time series in terms of two polynomials. One is called AR and the other is called MA.
 
-<p float="left">
-    <img src="https://github.com/katetywu/bankruptcy/blob/master/Figures/Figure8.jpeg" width="400" />
-    <img src="https://github.com/katetywu/bankruptcy/blob/master/Figures/Figure10.jpeg" width="400" />
-</p>
+The AR involves regressing the variable on its own lagged/past values, the MA involves modeling the error term as a linear combination which occurs contemporaneously at various times in the past. The model is referred to as the ARMA(p, q) where the p is the order of the AR and the q is the order of the MA. The autocorrelation function (ACF) measures the correlation between series values directly and is influenced by the intermediate values; in other words, __the ACF describes the autocorrelation between an observation and another observation at a prior time step including direct and indirect dependence information.__ The partial autocorrelation function (PACF) also measures the correlation between series values but with the intermediate lags being controlled; put differently, __the PACF only describes the direct relationship between an observation and its lag, holding the intermediate lags constant.__ The ACF determines the order of MA(q) and the PACF determines the order of AR(p). In this project, the order of *p and q* is 4 and 5, respectively.
 
-### * Stpe 3: Observing ACF and PACF
-The autocorrelation function (ACF) measures the correlation between series values directly, and it is influenced by the intermediate lags; the partial autocorrelation function (PACF) also measures the correlation between series values, but with the intermediate lags being controlled (i.e. holding the intermidate lags constant). Both the ACF and the PACF can determine the order of processes in an ARMA(p,q) model. ACF begins to decay after lag *q* and PACF begins to decay after lag *p*. The order for each is 5 and 6, respectively.
+> ARIMA is suitable for univariate datasets. ARIMAX is suitable for multivariate datasets.
 
-<p float="left">
-    <img src="https://github.com/katetywu/bankruptcy/blob/master/Figures/Figure13.jpeg" width="400" />
-    <img src="https://github.com/katetywu/bankruptcy/blob/master/Figures/Figure14.jpeg" width="400" />
-</p>
-
-### * Step 4: Building SARIMAX model
-Most time-series analyses are univariate that applies historical data of its own to forecast the future. However, I put other time-series into consideration due to their potential correlations with the bankruptcy rate. An ARIMAX model is the ARIMA pluses exogenous explanatory variables. Based on the result of ADF test, the seasonal differecing is unnecessary; yet there is a decreasingly positive spike between lags. These spikes determine the order of *P*. The following table depicts the combination of *p, q, d, P*; and by comparing the Akaike Information Criterion (AIC) - an estimator examines the relative amount of information lost by a given model. SARIMAX(4,1,5)(1,0,0)[12] has the smallest score that I will use it to do the prediction.
+ARIMAX is used for analyses where there are additional and exogenous explanatory variables. I start building my model with ARIMAX and check the differencing option by the ADF test. According to the ADF test, the seasonal differencing is unnecessary, but based on the PACF plot, there is a decreasingly positive spike between lags. After careful consideration, I decide to take the seasonal differencing and get the order of *P.* With all elements prepared completely, I have several SARIMAX models that I select the optimal one by the comparison using the Akaike Information Criterion (AIC) - an estimator examines the relative amount of information lost by a given model. The following table depicts the result and compares one model from another; SARIMAX(4,1,5)(1,0,0)[12] gets the smallest AIC score. Though the model has the minimum AIC score, I still need to ensure that this model is align with the White Noise principle - all variables have the same variance and each value has a zero correlation with all other values.
 
 MODEL | LOGLIK | AIC
 --- | --- | --- |
@@ -77,19 +59,3 @@ SARIMAX(4,1,2)(1,0,0)[12] | 352.0183 | -684.0365
 SARIMAX(4,1,3)(1,0,0)[12] | 368.9054 | -715.8108
 SARIMAX(4,1,4)(1,0,0)[12] | 372.6625 | -721.3250
 SARIMAX(4,1,5)(1,0,0)[12] | 376.2098 | -726.4197
-
-Once the model is decided, I have to ensure whether or not model residuals have zero mean, constant variance, and normal distribution over time. The following graph shows that the model is qualified for all criteria and is ready to do the forecasting.
-
-<p float="center">
-    <img src="https://github.com/katetywu/bankruptcy/blob/master/Figures/Figure15.jpeg" width="400" />
-</p>
-
-### * Step 5: Forecasting
-Adding the exogenous covariates, which are unemployment rate and house price index, into the model; I predict the trend for the next 24 months. The result lies in a 95% confidence interval. 
-
-<p float="center">
-    <img src="https://github.com/katetywu/bankruptcy/blob/master/Figures/Figure18.jpeg" width="400" />
-</p>
-
-## Summary
-With all time-factor components controlled, SARIMAX(4,1,5)(1,0,0)[12] is the optimal model to forecast the bankruptcy rate in this case. Based on the result of the model, the rate will decreasee in the next 2 years.
