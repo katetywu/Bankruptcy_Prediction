@@ -30,7 +30,7 @@ Based on the "eye-ball" test of the following figures, we have an increasing tre
 </p>
 
 <p>
-    <img src="Figures/corrMatrix.jpeg" alt="correlation" width=400 align=middle>
+    <img src="Figures/corrMatrix.jpeg" alt="correlation" width=500>
 </p>
 
 > Stationary indicates that the mean, variance, and autocorrelations are well approximated by sufficiently long time averages based on the single set of realizations.
@@ -43,9 +43,23 @@ Not until finishing the data transformation process can I start to build a model
 
 The AR involves regressing the variable on its own lagged/past values, the MA involves modeling the error term as a linear combination which occurs contemporaneously at various times in the past. The model is referred to as the ARMA(p, q) where the p is the order of the AR and the q is the order of the MA. The autocorrelation function (ACF) measures the correlation between series values directly and is influenced by the intermediate values; in other words, __the ACF describes the autocorrelation between an observation and another observation at a prior time step including direct and indirect dependence information.__ The partial autocorrelation function (PACF) also measures the correlation between series values but with the intermediate lags being controlled; put differently, __the PACF only describes the direct relationship between an observation and its lag, holding the intermediate lags constant.__ The ACF determines the order of MA(q) and the PACF determines the order of AR(p). In this project, the order of *p and q* is 4 and 5, respectively.
 
+<p>
+    <img src="Figures/acfDiffLogBankruptcyRate.jpeg" alt="ACF" width=400 align=middle>
+    <img src="Figures/pacfDiffLogBankruptcyRate.jpeg" alt="PACF" width=400 align=middle>
+</p>
+
 > ARIMA is suitable for univariate datasets. ARIMAX is suitable for multivariate datasets.
 
 ARIMAX is used for analyses where there are additional and exogenous explanatory variables. I start building my model with ARIMAX and check the differencing option by the ADF test. According to the ADF test, the seasonal differencing is unnecessary, but based on the PACF plot, there is a decreasingly positive spike between lags. After careful consideration, I decide to take the seasonal differencing and get the order of *P.* With all elements prepared completely, I have several SARIMAX models that I select the optimal one by the comparison using the Akaike Information Criterion (AIC) - an estimator examines the relative amount of information lost by a given model. SARIMAX(4,1,5)(1,0,0)[12] gets the smallest AIC score; other SARIMAX models can be found [here]("..."). There is still one thing to do before making the prediction - the model I chose is align with the White Noise priciple where all variables have the same variance and each value has a zero correlation with all other values. From the figure below, my model meets the criteria that I am prepared for the forecasting step.
 
+<p>
+    <img src="Figures/criteriaCheck.jpeg" alt="criteria" width=400 align=middle>
+    <img src="Figures/zeroMean.jpeg" alt="zero mean" width=400 align=middle>
+</p>
+
 ## Conclusion & Suggestions
 To sum up, SARIMAX(4,1,5)(1,0,0)[12] predicts the bankruptcy rate will decrease in the following years and the forecasting result lies in the 95% confidence interval, which determines how convincing the result is. The economy in Canada could be better in the following years; however, this conclusion could be improved by adding more information such as the GDP, the household income level, the PPP, etc. to the future research.
+
+<p>
+    <img src="Figures/predictedTrend.jpeg" alt="prediction" width=500>
+</p>
