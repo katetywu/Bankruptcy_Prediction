@@ -29,8 +29,8 @@ Based on the "eye-ball" test of the following figures, we have an increasing tre
 </p>
 
 <p>
-    <img src="Figures/housePriceIndex.jpeg" alt="HPI" width=350 align=middle>
-    <img src="Figures/corrMatrix.jpeg" alt="correlation" width=340 align=middle>
+    <img src="Figures/housePriceIndex.jpeg" alt="HPI" width=450 align=middle>
+    <img src="Figures/corrMatrix.jpeg" alt="correlation" width=440 align=middle>
 </p>
 
 > Stationary indicates that the mean, variance, and autocorrelations are well approximated by sufficiently long time averages based on the single set of realizations.
