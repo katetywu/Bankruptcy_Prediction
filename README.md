@@ -23,6 +23,12 @@ Take the situation of the Canadian financial market in 2015 into consideration, 
 ## Results
 Based on the "eye-ball" test of the following figures, we have an increasing trend in both the bankruptcy rate and the house price index; a decreasing tendency in the unemployment rate. Though the directions of these three variables are opposite, I believe there might be a relationsip among them. The bankruptcy rate has a postive and a negative connection with the house price index and the unemployment rate, respectively. Having a quick overview of three variables, I also minimize the skewness in the bankruptcy rate by using the logarithm function.
 
+<img src="Figures/bankruptcyRate.jpeg" width=300 align=center>
+<img src="Figures/unemploymentRate.jpeg" width=300 align=center>
+<img src="Figures/housePriceIndex.jpeg" width=300 align=center>
+
+
+
 > Stationary indicates that the mean, variance, and autocorrelations are well approximated by sufficiently long time averages based on the single set of realizations.
 
 I have to ensure that the time series - `bankruptcy rate` is stationary. There are several ways to detect whether or not the staionariness exists, I choose the Augmented Dickey-Fuller test (ADF) and fail to reject the null hypothesis, which the bankruptcy rate is stationary. Under this situation, I use the difference equation to eliminate *noises* from the variable. The difference equation is the funcation *expressing the value of a variable by its own lagged values, time, and other factors*; in other words, I take an one-year lag of the bankruptcy rate to remove the trend element.
