@@ -27,7 +27,7 @@ Based on the "eye-ball" test of the following figures, we have an increasing tre
     <img src="Figures/bankruptcyRate.jpeg" width=400 align=center>
     <img src="Figures/unemploymentRate.jpeg" width=400 align=center>
     <img src="Figures/housePriceIndex.jpeg" width=400 align=center>
-    <img src="Figures/corrMatrix.jpeg" width=450 align=center>
+    <img src="Figures/corrMatrix.jpeg" width=390 align=center>
 </p>
 
 
