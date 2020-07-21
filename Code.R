@@ -1,6 +1,6 @@
 # Setting up
 knitr::opts_chunk$set(echo = F, warning = F, message = F, cache = T)
-setwd("/Users/Kate/Desktop/Bankruptcy_Prediction/Data/")
+setwd("/Users/Kate/Desktop/bankruptcy-rate-prediction/Data/")
 
 library(tseries)
 library(forecast)
@@ -96,6 +96,7 @@ nsdiffs(bankTrainSetTrans)
 acf(diff(diff(bankTrainSetTrans), lag = 12), main = 'Bankruptcy Rate (d=1, D=1, lag=12)', lag.max = 60, ylim = c(-1, 1))
 pacf(diff(diff(bankTrainSetTrans), lag = 12), main = 'Bankruptcy Rate (d=1, D=1, lag=12)', lag.max = 60, ylim = c(-1, 1))
 
+
 # SARIMA model
 for (p in 1:3) {
   for (q in 1:3) {
@@ -173,6 +174,8 @@ bestSARIMAX <- Arima(bankTrainSetTrans,
 predSARIMAX <- forecast(bestSARIMAX, h = 24, level = 0.95,
                         xreg = unlist(popValSetTrans, hpiValSetTrans, ueValSetTrans))
 
+rmseSARIMAX <- rmse(bankValSetTrans, predSARIMAX$mean)
+
 # plot(bankTrain, xlim = c(1987, 2015), ylim = c(0, 10),
 #      main = expression('SARIMAX (1,1,2)(2,1,2)'[12]* '(RMSE = 0.07617)'),
 #      ylab = 'Bankruptcy Rate')
@@ -184,6 +187,44 @@ predSARIMAX <- forecast(bestSARIMAX, h = 24, level = 0.95,
 # lines(exp(predSARIMAX$upper)~timeNew, col = '#86C166')
 # legend('topleft', legend = c('Predicted', 'Fitted', 'Lower/Upper 95% CI', 'Actual'), 
 #        col = c('#CB4042', '#EFBB24', '#86C166', 'black'), lty = 1)
+
+
+# Sub-SARIMAX model
+# subBankTrainSet <- window(bankTrain, start = c(1995, 1), end = c(2012, 12))
+# subUeTrainSet <- window(ueTrain, start = c(1995, 1), end = c(2012, 12))
+# subPopTrainSet <- window(popTrain, start = c(1995, 1), end = c(2012, 12))
+# subHpiTrainSet <- window(hpiTrain, start = c(1995, 1), end = c(2012, 12))
+# 
+# subBankTrainSetTrans <- transformBoxCox(subBankTrainSet, subBankTrainSet)
+# subUeTrainSetTrans <- transformBoxCox(subBankTrainSet, subUeTrainSet)
+# subPopTrainSetTrans <- transformBoxCox(subBankTrainSet, subPopTrainSet)
+# subHpiTrainSetTrans <- transformBoxCox(subBankTrainSet, subHpiTrainSet)
+# 
+# for (p in 1:3) {
+#   for (q in 1:3) {
+#     for (P in 1:2) {
+#       for (Q in 1:4) {
+#         tryCatch({
+#           model <- Arima(subBankTrainSetTrans,
+#                          order = c(p, 1, q),
+#                          seasonal = list(order = c(P, 1, Q),
+#                                          period = 12),
+#                          method = 'CSS',
+#                          xreg = unlist(subPopTrainSetTrans, subHpiTrainSetTrans, subUeTrainSetTrans))
+#           pred <- forecast(model, h = 24, level = 0.95,
+#                            biasadj = TRUE,
+#                            xreg = unlist(popValSetTrans, hpiValSetTrans, ueValSetTrans))
+#           rmse <- rmse(bankValSetTrans, pred$mean)
+#           print(paste(p, q, P, Q, rmse))
+#           error = function(e) {
+#             cat('Error :', conditionMessage(e), '\n')
+#           }
+#         })
+#       }
+#     }
+#   }
+# }
+
 
 # Holt-Winters' seasonal model
 if(T) {
@@ -229,12 +270,13 @@ rmseHoltWinters <- rmse(bankValSetTrans, predHoltWinters$mean)
 # legend('topleft', legend = c('Predicted', 'Fitted', 'Lower/Upper 95% CI', 'Actual'), 
 #        col = c('#CB4042', '#EFBB24', '#86C166', 'black'), lty = 1)
 
+
 # VAR model
 if (T) {
   rmseValue <- c()
   pValue <- c()
   for (p in seq(1, 10, 1)) {
-    model <- VAR(data.frame(bankTrainSetTrans, popTrainSetTrans, hpiTrainSetTrans),
+    model <- VAR(data.frame(bankTrainSetTrans, popTrainSetTrans, hpiTrainSetTrans, ueTrainSetTrans),
                  p = p, season = 12, ic = 'AIC')
     pred <- predict(model, n.ahead = 24, ci = 0.95, biasadj = TRUE)
     rmse <- sqrt(mean(pred$fcst$bankTrainSetTrans[,1] - bankValSetTrans)^2)

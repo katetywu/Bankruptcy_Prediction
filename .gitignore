@@ -13,5 +13,7 @@ gradebook.db
 # R History
 .Rhistory
 
-# C extensions
-*.so
+# R Data
+.RData
+
+
