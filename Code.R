@@ -11,6 +11,7 @@ library(vars)
 library(car)
 library(timetk)
 library(Metrics)
+library(gridExtra)
 
 
 # Loading datasets
@@ -266,5 +267,4 @@ finalPred %>%
   theme(axis.text.y=element_text(size=12,vjust=0.5,face="bold")) +
   theme(axis.title.x=element_text(size=13,vjust=0.5,face="bold"), axis.title.y=element_text(size=13,vjust=0.5,face="bold")) + 
   theme(legend.title=element_blank())
-
 
